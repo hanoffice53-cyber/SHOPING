@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YADANAR Fastfood - ဈေးရောင်းမှတ်စု နှင့် ပို့ဆောင်ရေးစနစ်</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #140d07;
+      --bg-panel: #1f140b;
+      --bg-card: #28190e;
+      --bg-input: #170e07;
+      --gold: #f5b727;
+      --gold-bright: #ffd15c;
+      --gold-dim: #9e7416;
+      --border: #4a2f18;
+      --text-main: #f8ecd8;
+      --text-muted: #b89e78;
+      --green: #16a34a;
+      --green-soft: rgba(22, 163, 74, 0.18);
+      --green-border: #22c55e;
+      --red: #ef4444;
+      --red-soft: rgba(239, 68, 68, 0.18);
+      --blue: #3b82f6;
+      --blue-soft: rgba(59, 130, 246, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #27170b 0%, var(--bg-dark) 65%);
+      color: var(--text-main);
+      font-family: 'Padauk', sans-serif;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold-dim));
+      color: #1b1006;
+      font-weight: 700;
+      font-size: 20px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 21px;
+      color: var(--gold);
+      line-height: 1.25;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    button, input, select {
+      font-family: 'Padauk', sans-serif;
+      font-size: 14px;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 9px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.15s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-bright);
+    }
+
+    .btn-gold {
+      background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+      color: #190f05;
+      border-color: var(--gold);
+      font-weight: 700;
+    }
+
+    .btn-gold:hover {
+      color: #110a03;
+      filter: brightness(1.05);
+    }
+
+    .btn-green {
+      background: var(--green-soft);
+      border-color: var(--green-border);
+      color: #86efac;
+    }
+
+    .btn-red {
+      background: var(--red-soft);
+      border-color: rgba(239, 68, 68, 0.55);
+      color: #fca5a5;
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12.5px;
+      border-radius: 7px;
+    }
+
+    .date-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-bottom: 14px;
+    }
+
+    .date-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .date-controls label {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    input[type="date"],
+    input[type="month"],
+    input[type="text"],
+    input[type="number"],
+    select {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 11px;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--gold);
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 980px) {
+      .tabs { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .tabs { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .tab-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 12px 12px;
+      border-radius: 11px;
+      cursor: pointer;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.15s ease;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(180deg, rgba(245, 183, 39, 0.2), rgba(245, 183, 39, 0.06));
+      border-color: var(--gold);
+      color: var(--gold-bright);
+    }
+
+    .badge {
+      background: rgba(245, 183, 39, 0.2);
+      color: var(--gold-bright);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 18px;
+      color: var(--gold);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-val {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold-bright);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .form-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 540px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .field input, .field select {
+      width: 100%;
+    }
+
+    .pay-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .pay-option {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-main);
+      cursor: pointer;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .pay-option.active-cash {
+      background: var(--green-soft);
+      border-color: var(--green-border);
+      color: #86efac;
+    }
+
+    .pay-option.active-credit {
+      background: var(--red-soft);
+      border-color: var(--red);
+      color: #fca5a5;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(74, 47, 24, 0.55);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: var(--bg-card);
+      color: var(--gold);
+      font-size: 13.5px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill-morning {
+      background: rgba(245, 183, 39, 0.18);
+      color: var(--gold-bright);
+      border: 1px solid rgba(245, 183, 39, 0.45);
+    }
+
+    .pill-evening {
+      background: var(--blue-soft);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+    }
+
+    .pill-both {
+      background: rgba(168, 85, 247, 0.2);
+      color: #d8b4fe;
+      border: 1px solid rgba(168, 85, 247, 0.5);
+    }
+
+    .pill-monthly-auto {
+      background: rgba(20, 184, 166, 0.18);
+      color: #5eead4;
+      border: 1px solid rgba(20, 184, 166, 0.45);
+    }
+
+    .delivery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .room-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 13px;
+      cursor: pointer;
+      transition: 0.15s ease;
+      user-select: none;
+    }
+
+    .room-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    .room-card.delivered {
+      background: var(--green-soft);
+      border-color: var(--green-border);
+    }
+
+    .room-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .room-no {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--gold-bright);
+    }
+
+    .room-card.delivered .room-no {
+      color: #86efac;
+    }
+
+    .room-name {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .room-type {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .room-remark {
+      font-size: 12.5px;
+      color: #fde68a;
+      margin-top: 4px;
+    }
+
+    .summary-box {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 780px) {
+      .summary-box { grid-template-columns: 1fr; }
+    }
+
+    .ledger-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(184, 158, 120, 0.25);
+      font-size: 14.5px;
+    }
+
+    .ledger-row:last-child {
+      border-bottom: none;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-panel);
+      border: 1px solid var(--gold);
+      border-radius: 14px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 18px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--gold);
+      color: var(--gold-bright);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      z-index: 1200;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: 0.2s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-logo">၄၉</div>
+        <div>
+          <h1>YADANAR Fastfood</h1>
+          <p>ဈေးရောင်းမှတ်စု နှင့် ပို့ဆောင်ရေးစနစ် (Google Sheet Sync · လချုပ်စာရင်း)</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" onclick="openMenuModal()">ဟင်းပွဲများ</button>
+        <button class="btn btn-green" id="syncBtn" onclick="syncAllWithSheet()">Sync ယခုလုပ်မည်</button>
+        <button class="btn" onclick="openSheetModal()">Google Sheet <span class="badge" id="sheetStatusBadge">ချိတ်ဆက်ပြီး</span></button>
+        <button class="btn" onclick="exportBackup()">Backup</button>
+        <label class="btn" style="margin:0;">
+          Restore
+          <input type="file" accept=".json" style="display:none;" onchange="importBackup(event)" />
+        </label>
+      </div>
+    </div>
+
+    <div class="date-strip">
+      <div class="date-controls">
+        <label for="selectedDate">ရက်စွဲရွေးရန်:</label>
+        <input type="date" id="selectedDate" onchange="onDateChange()" />
+        <button class="btn btn-sm btn-gold" onclick="setToday()">ယနေ့</button>
+        <button class="btn btn-sm" onclick="runScheduledMonthlyDispatch(true)">မနက် ၅:၀၀ / နေ့လယ် ၁၂:၀၀ အလိုအလျောက်ပို့စစ်ရန်</button>
+      </div>
+      <div style="font-size:13.5px; color:var(--text-muted);" id="headerSummary">
+        အော်ဒါ: 0 · ပို့ရန်ကျန်: 0
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-sales" onclick="switchTab('sales')">၁။ နေ့စဉ်ဈေးရောင်း</button>
+      <button class="tab-btn" id="tab-delivery" onclick="switchTab('delivery')">
+        ၂။ ပို့ဆောင်ရန် <span class="badge" id="deliveryBadge">0</span>
+      </button>
+      <button class="tab-btn" id="tab-credit" onclick="switchTab('credit')">၃။ တစ်ဦးချင်းအကြွေး</button>
+      <button class="tab-btn" id="tab-monthly" onclick="switchTab('monthly')">
+        ၄။ လစဉ်မှာသူများ <span class="badge" id="monthlyBadge">0</span>
+      </button>
+      <button class="tab-btn" id="tab-summary" onclick="switchTab('summary')">၅။ လချုပ်</button>
+    </div>
+
+    <!-- TAB 1: DAILY SALES -->
+    <section id="view-sales">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">ငွေသားစုစုပေါင်း</div>
+          <div class="stat-val" id="statCash">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">အကြွေးစုစုပေါင်း (နေ့စဉ်အော်ဒါ)</div>
+          <div class="stat-val" id="statCredit" style="color:#fca5a5;">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">နေ့စဉ်စုစုပေါင်း (နေ့စဉ်ရောင်းရစာရင်း)</div>
+          <div class="stat-val" id="statTotal">0</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title" id="saleFormTitle">စာရင်းအသစ်ထည့်သွင်းရန်</h2>
+          <button class="btn btn-sm" onclick="resetSaleForm()">ဖောင်ရှင်းမည်</button>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>အမည် *</label>
+            <input type="text" id="saleName" placeholder="ဥပမာ - ကိုအောင်" />
+          </div>
+          <div class="field">
+            <label>အခန်းနံပါတ် *</label>
+            <input type="text" id="saleRoom" placeholder="ဥပမာ - A 1/1" />
+          </div>
+          <div class="field">
+            <label>အချိန်ပိုင်း *</label>
+            <select id="saleShift">
+              <option value="မနက်ပိုင်း">မနက်ပိုင်း</option>
+              <option value="ညနေပိုင်း">ညနေပိုင်း</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>ရောင်းကုန်အမျိုးအစား *</label>
+            <select id="saleType" onchange="onSaleTypeChange()">
+              <option value="ထမင်းနှင့်ဟင်း">ထမင်းနှင့်ဟင်း</option>
+              <option value="ဟင်း">ဟင်း</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>ဟင်းအမည် / မှတ်ချက်</label>
+            <input type="text" id="saleRemark" placeholder="ထမင်းနဲ့ဟင်း" />
+          </div>
+          <div class="field">
+            <label>နှုန်း *</label>
+            <input type="number" id="salePrice" min="0" value="60" oninput="updateSaleTotal()" />
+          </div>
+          <div class="field">
+            <label>အရေအတွက် *</label>
+            <input type="number" id="saleQty" min="1" value="1" oninput="updateSaleTotal()" />
+          </div>
+          <div class="field">
+            <label>စုစုပေါင်း</label>
+            <input type="number" id="saleTotal" readonly value="60" />
+          </div>
+          <div class="field" style="grid-column: span 2;">
+            <label>ငွေပေးချေမှု *</label>
+            <div class="pay-toggle">
+              <button type="button" class="pay-option active-cash" id="payCashBtn" onclick="setPaymentMode('ငွေသား')">ငွေသား</button>
+              <button type="button" class="pay-option" id="payCreditBtn" onclick="setPaymentMode('အကြွေး')">အကြွေး</button>
+            </div>
+          </div>
+          <div class="field" style="grid-column: span 2; display:flex; align-items:flex-end;">
+            <button class="btn btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="saveSaleEntry()">
+              ✓ စာရင်းသိမ်းဆည်းမည်
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">နေ့စဉ်ဈေးရောင်းစာရင်း</h2>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <select id="salesShiftFilter" onchange="renderAll()">
+              <option value="ALL">အချိန်ပိုင်း အားလုံး</option>
+              <option value="မနက်ပိုင်း">မနက်ပိုင်း</option>
+              <option value="ညနေပိုင်း">ညနေပိုင်း</option>
+            </select>
+            <input type="text" id="salesSearch" placeholder="အမည် သို့မဟုတ် အခန်းရှာရန်..." oninput="renderAll()" />
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>စဉ်</th>
+                <th>အမည်</th>
+                <th>အခန်းနံပါတ်</th>
+                <th>အချိန်ပိုင်း</th>
+                <th>အမျိုးအစား / မှတ်ချက်</th>
+                <th>နှုန်း</th>
+                <th>ခုရေ</th>
+                <th>စုစုပေါင်း</th>
+                <th>ငွေချေမှု</th>
+                <th>လုပ်ဆောင်ချက်</th>
+              </tr>
+            </thead>
+            <tbody id="salesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: DELIVERY -->
+    <section id="view-delivery" style="display:none;">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">ပို့ဆောင်ရန် အခန်းများစာရင်း</h2>
+            <p style="margin:4px 0 0; font-size:13px; color:var(--text-muted);">
+              ပို့ဆောင်ပြီးပါက အခန်းကတ်ကို နှိပ်လိုက်ပါ (အစိမ်းရောင်သို့ ပြောင်းလဲပါမည်) · မနက်ပိုင်း / ညနေပိုင်း နှိပ်လျှင် ထမင်းနှင့်ဟင်း နှင့် ဟင်း အရေအတွက်များကို ပြသပေးပါမည်။
+            </p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-gold" id="delShiftAll" onclick="setDeliveryShiftFilter('ALL')">အားလုံး</button>
+            <button class="btn btn-sm" id="delShiftMorning" onclick="setDeliveryShiftFilter('မနက်ပိုင်း')">မနက်ပိုင်း (၅:၀၀ AM)</button>
+            <button class="btn btn-sm" id="delShiftEvening" onclick="setDeliveryShiftFilter('ညနေပိုင်း')">ညနေပိုင်း (၁၂:၀၀ PM)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <button class="btn btn-sm btn-gold" id="delTypeAll" onclick="setDeliveryTypeFilter('ALL')">အားလုံး (0)</button>
+            <button class="btn btn-sm" id="delTypeMeal" onclick="setDeliveryTypeFilter('ထမင်းနှင့်ဟင်း')">ထမင်းနှင့်ဟင်း (0)</button>
+            <button class="btn btn-sm" id="delTypeCurry" onclick="setDeliveryTypeFilter('ဟင်း')">ဟင်း (0)</button>
+            <span class="pill pill-morning" id="shiftMealCurrySummary">ရွေးချယ်ထားသောပိုင်း · ထမင်းနှင့်ဟင်း: 0 · ဟင်း: 0</span>
+          </div>
+          <div style="font-weight:700; color:#86efac;" id="deliveryProgressText">ပို့ပြီး: 0 / 0</div>
+        </div>
+
+        <div class="delivery-grid" id="deliveryGrid"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: CREDIT -->
+    <section id="view-credit" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">ရွေးချယ်ထားသောနေ့ နေ့စဉ်ကြွေးစုစုပေါင်း</div>
+          <div class="stat-val" id="creditDayTotal">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">ရွေးချယ်ထားသောလ လစဉ်စုစုပေါင်း</div>
+          <div class="stat-val" id="creditMonthTotal">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">အားလုံး စုစုပေါင်း (ကျန်ငွေ)</div>
+          <div class="stat-val" id="creditGrandTotal" style="color:#fca5a5;">0</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <h2 class="panel-title">တစ်ဦးချင်းအကြွေးစာရင်း</h2>
+            <input type="month" id="creditMonthPicker" onchange="renderAll()" />
+          </div>
+          <input type="text" id="creditSearch" placeholder="အမည် သို့မဟုတ် အခန်းရှာရန်..." oninput="renderAll()" />
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>စဉ်</th>
+                <th>အမည်</th>
+                <th>အခန်းနံပါတ်</th>
+                <th>အမျိုးအစား</th>
+                <th>နေ့စဉ်ကြွေး</th>
+                <th>လစဉ် စုစုပေါင်း</th>
+                <th>အားလုံး စုစုပေါင်း</th>
+                <th>အကြွေးရှင်းရန်</th>
+              </tr>
+            </thead>
+            <tbody id="creditTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: MONTHLY SUBSCRIBERS -->
+    <section id="view-monthly" style="display:none;">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title" id="monthlyFormTitle">လစဉ်မှာသူ စာရင်းထည့်ရန် (တစ်လစာ လစဉ်ကြေး တစ်ခုတည်းသာ တွက်ချက်ပါမည်)</h2>
+          <button class="btn btn-sm" onclick="resetMonthlyForm()">ဖောင်ရှင်းမည်</button>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>အမည် *</label>
+            <input type="text" id="subName" placeholder="ဥပမာ - သင်းစာလင်း" />
+          </div>
+          <div class="field">
+            <label>အခန်းနံပါတ် *</label>
+            <input type="text" id="subRoom" placeholder="ဥပမာ - B 2/6" />
+          </div>
+          <div class="field">
+            <label>အချိန်ပိုင်း *</label>
+            <select id="subShift">
+              <option value="မနက်ပိုင်း">မနက်ပိုင်း (၅:၀၀ AM ပို့မည်)</option>
+              <option value="ညနေပိုင်း">ညနေပိုင်း (၁၂:၀၀ PM ပို့မည်)</option>
+              <option value="မနက် + ညနေ">မနက် + ညနေ (၅:၀၀ AM & ၁၂:၀၀ PM)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>အမျိုးအစား *</label>
+            <select id="subType" onchange="onSubTypeChange()">
+              <option value="ထမင်းနှင့်ဟင်း">ထမင်းနှင့်ဟင်း</option>
+              <option value="ဟင်း">ဟင်း</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>ဟင်းအမည် / မှတ်ချက်</label>
+            <input type="text" id="subRemark" placeholder="ထမင်းနဲ့ဟင်း" />
+          </div>
+          <div class="field">
+            <label>လစဉ်နှုန်း (၁ လစာ) *</label>
+            <input type="number" id="subPrice" min="0" value="450" />
+          </div>
+          <div class="field">
+            <label>အရေအတွက် *</label>
+            <input type="number" id="subQty" min="1" value="1" />
+          </div>
+          <div class="field">
+            <label>ပို့ဆောင်မည့်ရက် *</label>
+            <select id="subSchedule">
+              <option value="DAILY">နေ့စဉ် (ပိတ်ရက်မရှိ)</option>
+              <option value="SAT_BOTH">စနေနေ့ မနက် + ည ပို့မည်</option>
+              <option value="SUN_OFF">တနင်္ဂနွေပိတ်</option>
+              <option value="SAT_SUN_OFF">စနေ၊ တနင်္ဂနွေပိတ်</option>
+            </select>
+          </div>
+          <div class="field" style="grid-column: span 4; display:flex; align-items:flex-end;">
+            <button class="btn btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="saveMonthlySubscriber()">
+              ✓ လစဉ်မှာသူ သိမ်းဆည်းမည်
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title" id="monthlyListHeading">လစဉ်မှာသူများစာရင်း</h2>
+          <input type="text" id="monthlySearch" placeholder="အမည် သို့မဟုတ် အခန်းရှာရန်..." oninput="renderAll()" />
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>စဉ်</th>
+                <th>အမည် / အခန်း</th>
+                <th>အချိန်ပိုင်း</th>
+                <th>အမျိုးအစား / မှတ်ချက်</th>
+                <th>လစဉ်နှုန်း × ခုရေ</th>
+                <th>ပို့ဆောင်မည့်ရက်</th>
+                <th>ယနေ့ ပိတ်ရက်/မယူပါ</th>
+                <th>အခြေအနေ</th>
+                <th>လုပ်ဆောင်ချက်</th>
+              </tr>
+            </thead>
+            <tbody id="monthlyTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: MONTHLY SUMMARY (လချုပ်) -->
+    <section id="view-summary" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">စုစုပေါင်း ဝင်ငွေ (နေ့စဉ်ကုန်ရောင်း + လစဉ်ကြွေး)</div>
+          <div class="stat-val" id="sumTotalIncome" style="color:#86efac;">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">စုစုပေါင်း ထွက်ငွေ (ကုန်ဝယ် + အခန်းခ + ရေခ + မီးခ)</div>
+          <div class="stat-val" id="sumTotalExpense" style="color:#fca5a5;">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">စုစုပေါင်း လက်ကျန် (ဝင်ငွေ - ထွက်ငွေ)</div>
+          <div class="stat-val" id="sumNetBalance">0</div>
+        </div>
+      </div>
+
+      <div class="summary-box">
+        <div class="panel" style="margin-bottom:0;">
+          <div class="panel-header">
+            <h2 class="panel-title">ဝင်ငွေစာရင်း (ရွေးချယ်ထားသောလ)</h2>
+            <input type="month" id="summaryMonthPicker" onchange="renderAll()" />
+          </div>
+          <div class="ledger-row">
+            <span>နေ့စဉ်ကုန်ရောင်း စုစုပေါင်း</span>
+            <strong id="incDailySales" style="color:var(--gold-bright);">0</strong>
+          </div>
+          <div class="ledger-row">
+            <span>လစဉ်ကြွေး စုစုပေါင်း</span>
+            <strong id="incMonthlyCredit" style="color:var(--gold-bright);">0</strong>
+          </div>
+          <div class="ledger-row" style="font-weight:700; color:#86efac;">
+            <span>ဝင်ငွေ စုစုပေါင်း</span>
+            <span id="incTotal">0</span>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:0;">
+          <div class="panel-header">
+            <h2 class="panel-title">လစဉ် ထွက်ငွေထည့်သွင်းရန် (အခန်းခ / ရေခ / မီးခ)</h2>
+          </div>
+          <div class="form-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="field">
+              <label>အခန်းခ</label>
+              <input type="number" id="expRoomRent" min="0" value="0" oninput="saveMonthlyExpenses()" />
+            </div>
+            <div class="field">
+              <label>ရေခ</label>
+              <input type="number" id="expWaterBill" min="0" value="0" oninput="saveMonthlyExpenses()" />
+            </div>
+            <div class="field">
+              <label>မီးခ</label>
+              <input type="number" id="expElectricBill" min="0" value="0" oninput="saveMonthlyExpenses()" />
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <div class="ledger-row">
+              <span>နေ့စဉ်ကုန်ဝယ် စုစုပေါင်း</span>
+              <strong id="expGoodsTotal" style="color:#fca5a5;">0</strong>
+            </div>
+            <div class="ledger-row">
+              <span>လစဉ် အခန်းခ + ရေခ + မီးခ</span>
+              <strong id="expFixedTotal" style="color:#fca5a5;">0</strong>
+            </div>
+            <div class="ledger-row" style="font-weight:700; color:#fca5a5;">
+              <span>ထွက်ငွေ စုစုပေါင်း</span>
+              <span id="expGrandTotal">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">နေ့စဉ် ကုန်ဝယ်မှတ်တမ်း ထည့်ရန်</h2>
+        </div>
+        <div class="form-grid" style="margin-bottom:14px;">
+          <div class="field">
+            <label>ရက်စွဲ</label>
+            <input type="date" id="purchaseDate" />
+          </div>
+          <div class="field">
+            <label>ကုန်ဝယ် အကြောင်းအရာ *</label>
+            <input type="text" id="purchaseItem" placeholder="ဥပမာ - ကြက်သား၊ ဆန်၊ ဆီ" />
+          </div>
+          <div class="field">
+            <label>ကုန်ဝယ်ငွေ *</label>
+            <input type="number" id="purchaseAmount" min="0" placeholder="0" />
+          </div>
+          <div class="field" style="display:flex; align-items:flex-end;">
+            <button class="btn btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="addDailyPurchase()">
+              + ကုန်ဝယ်စာရင်း ထည့်မည်
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>စဉ်</th>
+                <th>ရက်စွဲ</th>
+                <th>ကုန်ဝယ် အကြောင်းအရာ</th>
+                <th>ငွေပမာဏ</th>
+                <th>လုပ်ဆောင်ချက်</th>
+              </tr>
+            </thead>
+            <tbody id="purchasesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- GOOGLE SHEET MODAL -->
+  <div class="modal-backdrop" id="sheetModal">
+    <div class="modal">
+      <div class="panel-header">
+        <h3 class="panel-title">Google Sheet ချိတ်ဆက်မှု</h3>
+        <button class="btn btn-sm" onclick="closeModal('sheetModal')">✕</button>
+      </div>
+      <div class="field" style="margin-bottom:12px;">
+        <label>Google Apps Script Web App URL</label>
+        <input type="text" id="sheetUrlInput" />
+      </div>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn btn-gold" onclick="saveSheetUrl()">သိမ်းဆည်းပြီး Sync လုပ်မည်</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MENU MODAL -->
+  <div class="modal-backdrop" id="menuModal">
+    <div class="modal">
+      <div class="panel-header">
+        <h3 class="panel-title">မနက်ပိုင်း / ညနေပိုင်း ဟင်းပွဲများ (၂ မျိုးစီ)</h3>
+        <button class="btn btn-sm" onclick="closeModal('menuModal')">✕</button>
+      </div>
+      <div class="form-grid" style="margin-bottom:14px;">
+        <div class="field">
+          <label>အချိန်ပိုင်း</label>
+          <select id="menuShift">
+            <option value="မနက်ပိုင်း">မနက်ပိုင်း</option>
+            <option value="ညနေပိုင်း">ညနေပိုင်း</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>ဟင်းပွဲအမည်</label>
+          <input type="text" id="menuDishName" placeholder="ဥပမာ - ထမင်းနဲ့ဟင်း" />
+        </div>
+        <div class="field">
+          <label>ဈေးနှုန်း</label>
+          <input type="number" id="menuDishPrice" value="60" min="0" />
+        </div>
+        <div class="field" style="display:flex; align-items:flex-end;">
+          <button class="btn btn-gold" style="width:100%; justify-content:center;" onclick="addMenuDish()">+ ထည့်မည်</button>
+        </div>
+      </div>
+      <div id="menuDishList" style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"></div>
+    </div>
+  </div>
+
+  <!-- CREDIT PAYMENT MODAL -->
+  <div class="modal-backdrop" id="creditModal">
+    <div class="modal" style="max-width:460px;">
+      <div class="panel-header">
+        <h3 class="panel-title" id="creditModalTitle">အကြွေးရှင်းရန်</h3>
+        <button class="btn btn-sm" onclick="closeModal('creditModal')">✕</button>
+      </div>
+      <p id="creditModalInfo" style="color:var(--text-muted); font-size:13.5px;"></p>
+      <div class="field" style="margin-bottom:12px;">
+        <label>ဆပ်ငွေပမာဏ</label>
+        <input type="number" id="payAmountInput" min="1" />
+      </div>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn btn-green" onclick="submitCreditPayment()">✓ အကြွေးဆပ်ငွေ သိမ်းမည်</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbxTCHXjy0JDTEJFIxU1FUEHzA4ScjJ7ef2l3j-LuMqNCrJH8SOp83CwYvWs55OZqqX4/exec";
+    const STORAGE_KEY = "YADANAR_FASTFOOD_DB_V6";
+
+    const DEFAULT_SUBSCRIBERS = [
+      { id: "sub-1", name: "သင်းစာလင်း", room: "B 2/6", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 450, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-2", name: "ကောင်းသက်ထွန်း", room: "A 3/4", shift: "မနက် + ညနေ", type: "ထမင်းနှင့်ဟင်း", remark: "ထမင်းနဲ့ဟင်း", price: 1520, qty: 1, schedule: "DAILY", active: false },
+      { id: "sub-3", name: "နန်းမူ", room: "B 3/8", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 780, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-4", name: "ဖြိုးဝေစိုး", room: "B 3/4", shift: "ညနေပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-5", name: "ဇာဇာ", room: "A 1/10", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-6", name: "နိုင်လင်းဆွေ", room: "A 1/2", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-7", name: "လချွန်း", room: "B 1/14", shift: "မနက် + ညနေ", type: "ထမင်းနှင့်ဟင်း", remark: "ထမင်းနဲ့ဟင်း", price: 1750, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-8", name: "အောင်ခန့်", room: "B 1/3", shift: "မနက် + ညနေ", type: "ဟင်း", remark: "ဟင်း", price: 1800, qty: 1, schedule: "DAILY", active: true }
+    ];
+
+    const DEFAULT_MENU = [
+      { id: "m-1", shift: "မနက်ပိုင်း", name: "ထမင်းနဲ့ဟင်း", price: 40 },
+      { id: "m-2", shift: "မနက်ပိုင်း", name: "မနက်ပိုင်းဟင်း", price: 30 },
+      { id: "m-3", shift: "ညနေပိုင်း", name: "ထမင်းနဲ့ဟင်း", price: 40 },
+      { id: "m-4", shift: "ညနေပိုင်း", name: "ညနေပိုင်းဟင်း", price: 30 }
+    ];
+
+    let state = loadState();
+    let activeTab = "sales";
+    let paymentMode = "ငွေသား";
+    let editingSaleId = null;
+    let editingSubId = null;
+    let deliveryShiftFilter = "ALL";
+    let deliveryTypeFilter = "ALL";
+    let creditTargetKey = null;
+
+    function getLocalDateStr(d = new Date()) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return {
+            sheetUrl: parsed.sheetUrl || DEFAULT_SHEET_URL,
+            selectedDate: parsed.selectedDate || getLocalDateStr(),
+            sales: parsed.sales || [],
+            subscribers: parsed.subscribers || DEFAULT_SUBSCRIBERS,
+            monthlySkips: parsed.monthlySkips || {},
+            deliveryChecks: parsed.deliveryChecks || {},
+            creditPayments: parsed.creditPayments || [],
+            menuDishes: parsed.menuDishes || DEFAULT_MENU,
+            purchases: parsed.purchases || [],
+            monthlyBills: parsed.monthlyBills || {}
+          };
+        }
+      } catch (e) {}
+      return {
+        sheetUrl: DEFAULT_SHEET_URL,
+        selectedDate: getLocalDateStr(),
+        sales: [],
+        subscribers: DEFAULT_SUBSCRIBERS,
+        monthlySkips: {},
+        deliveryChecks: {},
+        creditPayments: [],
+        menuDishes: DEFAULT_MENU,
+        purchases: [],
+        monthlyBills: {}
+      };
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    function formatNum(n) {
+      return Number(n || 0).toLocaleString("en-US");
+    }
+
+    function getMyanmarDayName(dateStr) {
+      const [y, m, d] = dateStr.split("-").map(Number);
+      const dt = new Date(y, m - 1, d);
+      const names = ["တနင်္ဂနွေ", "တနင်္လာ", "အင်္ဂါ", "ဗုဒ္ဓဟူး", "ကြာသပတေး", "သောကြာ", "စနေ"];
+      return names[dt.getDay()];
+    }
+
+    function isSubscriberScheduledForDate(sub, dateStr) {
+      if (!sub.active) return false;
+      const [y, m, d] = dateStr.split("-").map(Number);
+      const day = new Date(y, m - 1, d).getDay();
+      if (sub.schedule === "SUN_OFF" && day === 0) return false;
+      if (sub.schedule === "SAT_SUN_OFF" && (day === 0 || day === 6)) return false;
+      const skipKey = `${dateStr}_${sub.id}`;
+      if (state.monthlySkips[skipKey]) return false;
+      return true;
+    }
+
+    function getSubscriberShiftsForDate(sub, dateStr) {
+      const [y, m, d] = dateStr.split("-").map(Number);
+      const day = new Date(y, m - 1, d).getDay();
+      if (sub.schedule === "SAT_BOTH" && day === 6) {
+        return ["မနက်ပိုင်း", "ညနေပိုင်း"];
+      }
+      return sub.shift === "မနက် + ညနေ" ? ["မနက်ပိုင်း", "ညနေပိုင်း"] : [sub.shift];
+    }
+
+    function getAllowedShiftsForNow(dateStr) {
+      const todayStr = getLocalDateStr();
+      if (dateStr < todayStr) return ["မနက်ပိုင်း", "ညနေပိုင်း"];
+      if (dateStr > todayStr) return [];
+      const now = new Date();
+      const totalMinutes = now.getHours() * 60 + now.getMinutes();
+      const allowed = [];
+      if (totalMinutes >= 5 * 60) allowed.push("မနက်ပိုင်း");
+      if (totalMinutes >= 12 * 60) allowed.push("ညနေပိုင်း");
+      return allowed;
+    }
+
+    function runScheduledMonthlyDispatch(manualTrigger = false) {
+      const targetDate = state.selectedDate || getLocalDateStr();
+      const allowedShifts = getAllowedShiftsForNow(targetDate);
+      let newlyDispatched = 0;
+
+      state.subscribers.forEach(sub => {
+        if (!isSubscriberScheduledForDate(sub, targetDate)) return;
+        const shiftsToCheck = getSubscriberShiftsForDate(sub, targetDate);
+
+        shiftsToCheck.forEach(sh => {
+          if (!allowedShifts.includes(sh)) return;
+          const dispatchId = `md-${targetDate}-${sub.id}-${sh}`;
+          const exists = state.sales.some(s => s.id === dispatchId);
+          if (!exists) {
+            state.sales.push({
+              id: dispatchId,
+              date: targetDate,
+              name: sub.name,
+              room: sub.room,
+              shift: sh,
+              type: sub.type,
+              remark: sub.remark || (sub.type === "ထမင်းနှင့်ဟင်း" ? "ထမင်းနဲ့ဟင်း" : "ဟင်း"),
+              price: 0,
+              qty: Number(sub.qty || 1),
+              total: 0,
+              payment: "လစဉ်",
+              isMonthlySubscriber: true,
+              excludeFromDailySales: true,
+              dispatchedAt: new Date().toISOString()
+            });
+            newlyDispatched++;
+          }
+        });
+      });
+
+      if (newlyDispatched > 0) {
+        saveState();
+        renderAll();
+        showToast(`လစဉ်မှာသူ ${newlyDispatched} ခု ပို့ဆောင်ရန်သို့ အလိုအလျောက် ပို့ပြီးပါပြီ`);
+      } else if (manualTrigger) {
+        showToast("လက်ရှိအချိန်အရ ပို့ဆောင်ရန်သစ် မရှိသေးပါ (မနက် ၅:၀၀ / ညနေ ၁၂:၀၀)");
+      }
+    }
+
+    function initApp() {
+      document.getElementById("selectedDate").value = state.selectedDate;
+      document.getElementById("purchaseDate").value = state.selectedDate;
+      document.getElementById("creditMonthPicker").value = state.selectedDate.slice(0, 7);
+      document.getElementById("summaryMonthPicker").value = state.selectedDate.slice(0, 7);
+      document.getElementById("sheetUrlInput").value = state.sheetUrl || DEFAULT_SHEET_URL;
+      onSaleTypeChange();
+      onSubTypeChange();
+      updateSaleTotal();
+      runScheduledMonthlyDispatch(false);
+      renderAll();
+
+      setInterval(() => {
+        runScheduledMonthlyDispatch(false);
+      }, 30000);
+    }
+
+    function setToday() {
+      state.selectedDate = getLocalDateStr();
+      document.getElementById("selectedDate").value = state.selectedDate;
+      document.getElementById("creditMonthPicker").value = state.selectedDate.slice(0, 7);
+      document.getElementById("summaryMonthPicker").value = state.selectedDate.slice(0, 7);
+      saveState();
+      runScheduledMonthlyDispatch(false);
+      renderAll();
+    }
+
+    function onDateChange() {
+      state.selectedDate = document.getElementById("selectedDate").value || getLocalDateStr();
+      document.getElementById("creditMonthPicker").value = state.selectedDate.slice(0, 7);
+      document.getElementById("summaryMonthPicker").value = state.selectedDate.slice(0, 7);
+      saveState();
+      runScheduledMonthlyDispatch(false);
+      renderAll();
+    }
+
+    function switchTab(tab) {
+      activeTab = tab;
+      ["sales", "delivery", "credit", "monthly", "summary"].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.toggle("active", t === tab);
+        document.getElementById(`view-${t}`).style.display = t === tab ? "block" : "none";
+      });
+      renderAll();
+    }
+
+    function onSaleTypeChange() {
+      const typeVal = document.getElementById("saleType").value;
+      const remarkInput = document.getElementById("saleRemark");
+      if (typeVal === "ထမင်းနှင့်ဟင်း") {
+        remarkInput.value = "ထမင်းနဲ့ဟင်း";
+      } else if (remarkInput.value === "ထမင်းနဲ့ဟင်း") {
+        remarkInput.value = "";
+      }
+    }
+
+    function onSubTypeChange() {
+      const typeVal = document.getElementById("subType").value;
+      const remarkInput = document.getElementById("subRemark");
+      if (typeVal === "ထမင်းနှင့်ဟင်း") {
+        remarkInput.value = "ထမင်းနဲ့ဟင်း";
+      } else if (remarkInput.value === "ထမင်းနဲ့ဟင်း") {
+        remarkInput.value = "ဟင်း";
+      }
+    }
+
+    function updateSaleTotal() {
+      const p = Number(document.getElementById("salePrice").value || 0);
+      const q = Number(document.getElementById("saleQty").value || 1);
+      document.getElementById("saleTotal").value = p * q;
+    }
+
+    function setPaymentMode(mode) {
+      paymentMode = mode;
+      document.getElementById("payCashBtn").classList.toggle("active-cash", mode === "ငွေသား");
+      document.getElementById("payCreditBtn").classList.toggle("active-credit", mode === "အကြွေး");
+    }
+
+    function resetSaleForm() {
+      editingSaleId = null;
+      document.getElementById("saleFormTitle").textContent = "စာရင်းအသစ်ထည့်သွင်းရန်";
+      document.getElementById("saleName").value = "";
+      document.getElementById("saleRoom").value = "";
+      document.getElementById("saleShift").value = "မနက်ပိုင်း";
+      document.getElementById("saleType").value = "ထမင်းနှင့်ဟင်း";
+      document.getElementById("saleRemark").value = "ထမင်းနဲ့ဟင်း";
+      document.getElementById("salePrice").value = "40";
+      document.getElementById("saleQty").value = "1";
+      updateSaleTotal();
+      setPaymentMode("ငွေသား");
+    }
+
+    function saveSaleEntry() {
+      const name = document.getElementById("saleName").value.trim();
+      const room = document.getElementById("saleRoom").value.trim();
+      const shift = document.getElementById("saleShift").value;
+      const type = document.getElementById("saleType").value;
+      let remark = document.getElementById("saleRemark").value.trim();
+      if (type === "ထမင်းနှင့်ဟင်း" && !remark) remark = "ထမင်းနဲ့ဟင်း";
+      const price = Number(document.getElementById("salePrice").value || 0);
+      const qty = Math.max(1, Number(document.getElementById("saleQty").value || 1));
+      const total = price * qty;
+
+      if (!name || !room) {
+        showToast("အမည် နှင့် အခန်းနံပါတ် ဖြည့်ပါ");
+        return;
+      }
+
+      if (editingSaleId) {
+        const idx = state.sales.findIndex(s => s.id === editingSaleId);
+        if (idx > -1) {
+          state.sales[idx] = {
+            ...state.sales[idx],
+            name, room, shift, type, remark, price, qty, total, payment: paymentMode
+          };
+        }
+        showToast("စာရင်းပြင်ဆင်ပြီးပါပြီ");
+      } else {
+        state.sales.push({
+          id: "s-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
+          date: state.selectedDate,
+          name, room, shift, type, remark, price, qty, total,
+          payment: paymentMode,
+          isMonthlySubscriber: false,
+          excludeFromDailySales: false
+        });
+        showToast("နေ့စဉ်ဈေးရောင်းစာရင်းသို့ ထည့်ပြီးပါပြီ");
+      }
+
+      saveState();
+      resetSaleForm();
+      renderAll();
+      syncAllWithSheet(true);
+    }
+
+    function editSaleEntry(id) {
+      const item = state.sales.find(s => s.id === id);
+      if (!item) return;
+      editingSaleId = id;
+      document.getElementById("saleFormTitle").textContent = "စာရင်းပြင်ဆင်ရန်";
+      document.getElementById("saleName").value = item.name;
+      document.getElementById("saleRoom").value = item.room;
+      document.getElementById("saleShift").value = item.shift || "မနက်ပိုင်း";
+      document.getElementById("saleType").value = item.type;
+      document.getElementById("saleRemark").value = item.remark || "";
+      document.getElementById("salePrice").value = item.price;
+      document.getElementById("saleQty").value = item.qty;
+      updateSaleTotal();
+      setPaymentMode(item.payment === "အကြွေး" ? "အကြွေး" : "ငွေသား");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function deleteSaleEntry(id) {
+      state.sales = state.sales.filter(s => s.id !== id);
+      saveState();
+      renderAll();
+      showToast("စာရင်းဖျက်ပြီးပါပြီ");
+    }
+
+    function resetMonthlyForm() {
+      editingSubId = null;
+      document.getElementById("monthlyFormTitle").textContent = "လစဉ်မှာသူ စာရင်းထည့်ရန် (တစ်လစာ လစဉ်ကြေး တစ်ခုတည်းသာ တွက်ချက်ပါမည်)";
+      document.getElementById("subName").value = "";
+      document.getElementById("subRoom").value = "";
+      document.getElementById("subShift").value = "မနက်ပိုင်း";
+      document.getElementById("subType").value = "ထမင်းနှင့်ဟင်း";
+      document.getElementById("subRemark").value = "ထမင်းနဲ့ဟင်း";
+      document.getElementById("subPrice").value = "450";
+      document.getElementById("subQty").value = "1";
+      document.getElementById("subSchedule").value = "DAILY";
+    }
+
+    function saveMonthlySubscriber() {
+      const name = document.getElementById("subName").value.trim();
+      const room = document.getElementById("subRoom").value.trim();
+      const shift = document.getElementById("subShift").value;
+      const type = document.getElementById("subType").value;
+      let remark = document.getElementById("subRemark").value.trim();
+      if (type === "ထမင်းနှင့်ဟင်း" && !remark) remark = "ထမင်းနဲ့ဟင်း";
+      const price = Number(document.getElementById("subPrice").value || 0);
+      const qty = Math.max(1, Number(document.getElementById("subQty").value || 1));
+      const schedule = document.getElementById("subSchedule").value;
+
+      if (!name || !room) {
+        showToast("အမည် နှင့် အခန်းနံပါတ် ဖြည့်ပါ");
+        return;
+      }
+
+      if (editingSubId) {
+        const idx = state.subscribers.findIndex(s => s.id === editingSubId);
+        if (idx > -1) {
+          state.subscribers[idx] = {
+            ...state.subscribers[idx],
+            name, room, shift, type, remark, price, qty, schedule
+          };
+          state.sales = state.sales.filter(s => !(s.date === state.selectedDate && s.id.startsWith(`md-${state.selectedDate}-${editingSubId}-`)));
+        }
+        showToast("လစဉ်မှာသူ ပြင်ဆင်ပြီးပါပြီ");
+      } else {
+        state.subscribers.push({
+          id: "sub-" + Date.now(),
+          name, room, shift, type, remark, price, qty, schedule,
+          active: true
+        });
+        showToast("လစဉ်မှာသူ ထည့်သွင်းပြီးပါပြီ");
+      }
+
+      saveState();
+      resetMonthlyForm();
+      runScheduledMonthlyDispatch(false);
+      renderAll();
+      syncAllWithSheet(true);
+    }
+
+    function editMonthlySubscriber(id) {
+      const sub = state.subscribers.find(s => s.id === id);
+      if (!sub) return;
+      editingSubId = id;
+      document.getElementById("monthlyFormTitle").textContent = "လစဉ်မှာသူ ပြင်ဆင်ရန်";
+      document.getElementById("subName").value = sub.name;
+      document.getElementById("subRoom").value = sub.room;
+      document.getElementById("subShift").value = sub.shift;
+      document.getElementById("subType").value = sub.type;
+      document.getElementById("subRemark").value = sub.remark || "";
+      document.getElementById("subPrice").value = sub.price;
+      document.getElementById("subQty").value = sub.qty;
+      document.getElementById("subSchedule").value = sub.schedule;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function toggleSubscriberSkipToday(subId) {
+      const key = `${state.selectedDate}_${subId}`;
+      if (state.monthlySkips[key]) {
+        delete state.monthlySkips[key];
+        runScheduledMonthlyDispatch(false);
+      } else {
+        state.monthlySkips[key] = true;
+        state.sales = state.sales.filter(s => !(s.date === state.selectedDate && s.id.startsWith(`md-${state.selectedDate}-${subId}-`)));
+      }
+      saveState();
+      renderAll();
+    }
+
+    function toggleSubscriberActive(subId) {
+      const sub = state.subscribers.find(s => s.id === subId);
+      if (!sub) return;
+      sub.active = !sub.active;
+      if (!sub.active) {
+        state.sales = state.sales.filter(s => !(s.date === state.selectedDate && s.id.startsWith(`md-${state.selectedDate}-${subId}-`)));
+      } else {
+        runScheduledMonthlyDispatch(false);
+      }
+      saveState();
+      renderAll();
+    }
+
+    function deleteMonthlySubscriber(subId) {
+      state.subscribers = state.subscribers.filter(s => s.id !== subId);
+      state.sales = state.sales.filter(s => !s.id.includes(`-${subId}-`));
+      saveState();
+      renderAll();
+      showToast("လစဉ်မှာသူ ဖျက်ပြီးပါပြီ");
+    }
+
+    // DELIVERY
+    function setDeliveryShiftFilter(shift) {
+      deliveryShiftFilter = shift;
+      ["ALL", "မနက်ပိုင်း", "ညနေပိုင်း"].forEach(k => {
+        const idMap = { "ALL": "delShiftAll", "မနက်ပိုင်း": "delShiftMorning", "ညနေပိုင်း": "delShiftEvening" };
+        document.getElementById(idMap[k]).classList.toggle("btn-gold", deliveryShiftFilter === k);
+      });
+      renderDelivery();
+    }
+
+    function setDeliveryTypeFilter(type) {
+      deliveryTypeFilter = type;
+      ["ALL", "ထမင်းနှင့်ဟင်း", "ဟင်း"].forEach(k => {
+        const idMap = { "ALL": "delTypeAll", "ထမင်းနှင့်ဟင်း": "delTypeMeal", "ဟင်း": "delTypeCurry" };
+        document.getElementById(idMap[k]).classList.toggle("btn-gold", deliveryTypeFilter === k);
+      });
+      renderDelivery();
+    }
+
+    function toggleRoomDelivered(key) {
+      state.deliveryChecks[key] = !state.deliveryChecks[key];
+      saveState();
+      renderDelivery();
+    }
+
+    function renderDelivery() {
+      const dateSales = state.sales.filter(s => s.date === state.selectedDate);
+      const shiftScoped = deliveryShiftFilter === "ALL"
+        ? dateSales
+        : dateSales.filter(s => (s.shift || "မနက်ပိုင်း") === deliveryShiftFilter);
+
+      const mealQtyCount = shiftScoped
+        .filter(s => s.type === "ထမင်းနှင့်ဟင်း")
+        .reduce((acc, s) => acc + Number(s.qty || 1), 0);
+
+      const curryQtyCount = shiftScoped
+        .filter(s => s.type !== "ထမင်းနှင့်ဟင်း")
+        .reduce((acc, s) => acc + Number(s.qty || 1), 0);
+
+      document.getElementById("delTypeAll").textContent = `အားလုံး (${shiftScoped.length})`;
+      document.getElementById("delTypeMeal").textContent = `ထမင်းနှင့်ဟင်း (${mealQtyCount})`;
+      document.getElementById("delTypeCurry").textContent = `ဟင်း (${curryQtyCount})`;
+
+      const shiftLabel = deliveryShiftFilter === "ALL" ? "အားလုံး" : deliveryShiftFilter;
+      document.getElementById("shiftMealCurrySummary").textContent =
+        `${shiftLabel} · ထမင်းနှင့်ဟင်း အရေအတွက်: ${mealQtyCount} · ဟင်း အရေအတွက်: ${curryQtyCount}`;
+
+      const filtered = shiftScoped.filter(s => {
+        if (deliveryTypeFilter === "ထမင်းနှင့်ဟင်း" && s.type !== "ထမင်းနှင့်ဟင်း") return false;
+        if (deliveryTypeFilter === "ဟင်း" && s.type === "ထမင်းနှင့်ဟင်း") return false;
+        return true;
+      });
+
+      const grid = document.getElementById("deliveryGrid");
+      if (!filtered.length) {
+        grid.innerHTML = `<div style="color:var(--text-muted); padding:16px;">ပို့ဆောင်ရန် အော်ဒါစာရင်း မရှိသေးပါ။</div>`;
+        document.getElementById("deliveryProgressText").textContent = `ပို့ပြီး: 0 / 0`;
+        return;
+      }
+
+      let doneCount = 0;
+      grid.innerHTML = filtered.map(item => {
+        const dKey = `${state.selectedDate}_${item.id}`;
+        const isDone = !!state.deliveryChecks[dKey];
+        if (isDone) doneCount++;
+        const shiftBadge = item.shift === "ညနေပိုင်း"
+          ? `<span class="pill pill-evening">ညနေပိုင်း</span>`
+          : `<span class="pill pill-morning">မနက်ပိုင်း</span>`;
+        const subTag = item.isMonthlySubscriber ? `<span class="pill pill-monthly-auto">လစဉ်</span>` : "";
+
+        return `
+          <div class="room-card ${isDone ? "delivered" : ""}" onclick="toggleRoomDelivered('${dKey}')">
+            <div class="room-top">
+              <span class="room-no">${item.room}</span>
+              <span style="display:flex; gap:4px; align-items:center;">${subTag}${shiftBadge}</span>
+            </div>
+            <div class="room-name">${item.name} (${item.qty})</div>
+            <div class="room-type">${item.type}</div>
+            ${item.remark ? `<div class="room-remark">${item.remark}</div>` : ""}
+            <div style="margin-top:8px; font-size:12px; font-weight:700; color:${isDone ? "#86efac" : "var(--gold)"};">
+              ${isDone ? "✓ ပို့ဆောင်ပြီး (အစိမ်း)" : "ပို့ရန်ကျန် · နှိပ်၍ အစိမ်းပြောင်းပါ"}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      document.getElementById("deliveryProgressText").textContent = `ပို့ပြီး: ${doneCount} / ${filtered.length}`;
+    }
+
+    // CREDIT LEDGER
+    function openCreditModal(key, name, room, balance) {
+      creditTargetKey = key;
+      document.getElementById("creditModalTitle").textContent = `အကြွေးရှင်းရန် - ${name} (${room})`;
+      document.getElementById("creditModalInfo").textContent = `လက်ရှိကျန်အကြွေး: ${formatNum(balance)}`;
+      document.getElementById("payAmountInput").value = balance > 0 ? balance : "";
+      document.getElementById("creditModal").classList.add("open");
+    }
+
+    function submitCreditPayment() {
+      const amt = Number(document.getElementById("payAmountInput").value || 0);
+      if (!creditTargetKey || amt <= 0) {
+        showToast("ဆပ်ငွေပမာဏ မှန်ကန်စွာ ထည့်ပါ");
+        return;
+      }
+      state.creditPayments.push({
+        id: "pay-" + Date.now(),
+        key: creditTargetKey,
+        date: state.selectedDate,
+        amount: amt
+      });
+      saveState();
+      closeModal("creditModal");
+      renderAll();
+      syncAllWithSheet(true);
+      showToast("အကြွေးဆပ်ငွေ မှတ်တမ်းတင်ပြီးပါပြီ");
+    }
+
+    function computeCreditSummary(selectedMonth) {
+      const map = new Map();
+      const ensureEntry = (name, room, isMonthly = false) => {
+        const key = `${name.trim()}__${room.trim()}`;
+        if (!map.has(key)) {
+          map.set(key, {
+            key,
+            name: name.trim(),
+            room: room.trim(),
+            isMonthly,
+            dayCredit: 0,
+            monthCredit: 0,
+            allCredit: 0,
+            paid: 0
+          });
+        } else if (isMonthly) {
+          map.get(key).isMonthly = true;
+        }
+        return map.get(key);
+      };
+
+      let monthlySubscribersTotal = 0;
+      state.subscribers.forEach(sub => {
+        const entry = ensureEntry(sub.name, sub.room, true);
+        const monthlyFee = sub.active ? Number(sub.price || 0) * Number(sub.qty || 1) : 0;
+        entry.dayCredit = 0;
+        entry.monthCredit += monthlyFee;
+        entry.allCredit += monthlyFee;
+        monthlySubscribersTotal += monthlyFee;
+      });
+
+      state.sales.forEach(s => {
+        if (!s.isMonthlySubscriber && s.payment === "အကြွေး") {
+          const entry = ensureEntry(s.name, s.room, false);
+          const amt = Number(s.total || 0);
+          entry.allCredit += amt;
+          if (s.date === state.selectedDate) entry.dayCredit += amt;
+          if (s.date.startsWith(selectedMonth)) entry.monthCredit += amt;
+        }
+      });
+
+      state.creditPayments.forEach(p => {
+        if (map.has(p.key)) {
+          map.get(p.key).paid += Number(p.amount || 0);
+        }
+      });
+
+      let daySum = 0;
+      let monthSum = 0;
+      let grandSum = 0;
+
+      const rows = Array.from(map.values()).map(item => {
+        const netAll = Math.max(0, item.allCredit - item.paid);
+        daySum += item.dayCredit;
+        monthSum += item.monthCredit;
+        grandSum += netAll;
+        return { ...item, netAll };
+      });
+
+      return { rows, daySum, monthSum, grandSum, monthlySubscribersTotal };
+    }
+
+    function renderCredit() {
+      const selectedMonth = document.getElementById("creditMonthPicker").value || state.selectedDate.slice(0, 7);
+      const q = (document.getElementById("creditSearch").value || "").trim().toLowerCase();
+      const { rows, daySum, monthSum, grandSum } = computeCreditSummary(selectedMonth);
+
+      document.getElementById("creditDayTotal").textContent = formatNum(daySum);
+      document.getElementById("creditMonthTotal").textContent = formatNum(monthSum);
+      document.getElementById("creditGrandTotal").textContent = formatNum(grandSum);
+
+      const filtered = rows.filter(r => !q || r.name.toLowerCase().includes(q) || r.room.toLowerCase().includes(q));
+      const tbody = document.getElementById("creditTableBody");
+
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:var(--text-muted);">အကြွေးစာရင်း မရှိပါ။</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((r, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td><strong>${r.name}</strong></td>
+          <td style="color:var(--gold); font-weight:700;">${r.room}</td>
+          <td>${r.isMonthly ? `<span class="pill pill-monthly-auto">လစဉ်မှာသူ</span>` : `<span class="pill pill-morning">နေ့စဉ်</span>`}</td>
+          <td>${formatNum(r.dayCredit)}</td>
+          <td>${formatNum(r.monthCredit)}</td>
+          <td style="color:#fca5a5; font-weight:700;">${formatNum(r.netAll)}</td>
+          <td>
+            <button class="btn btn-sm btn-green" onclick="openCreditModal('${r.key}', '${r.name}', '${r.room}', ${r.netAll})">
+              အကြွေးဆပ် / ကြည့်ရန်
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    // MONTHLY SUMMARY (လချုပ်)
+    function saveMonthlyExpenses() {
+      const monthKey = document.getElementById("summaryMonthPicker").value || state.selectedDate.slice(0, 7);
+      state.monthlyBills[monthKey] = {
+        rent: Number(document.getElementById("expRoomRent").value || 0),
+        water: Number(document.getElementById("expWaterBill").value || 0),
+        electric: Number(document.getElementById("expElectricBill").value || 0)
+      };
+      saveState();
+      renderMonthlySummary();
+    }
+
+    function addDailyPurchase() {
+      const date = document.getElementById("purchaseDate").value || state.selectedDate;
+      const item = document.getElementById("purchaseItem").value.trim();
+      const amount = Number(document.getElementById("purchaseAmount").value || 0);
+      if (!item || amount <= 0) {
+        showToast("ကုန်ဝယ်အကြောင်းအရာ နှင့် ငွေပမာဏ ဖြည့်ပါ");
+        return;
+      }
+      state.purchases.push({
+        id: "pur-" + Date.now(),
+        date,
+        item,
+        amount
+      });
+      document.getElementById("purchaseItem").value = "";
+      document.getElementById("purchaseAmount").value = "";
+      saveState();
+      renderAll();
+      syncAllWithSheet(true);
+      showToast("ကုန်ဝယ်စာရင်း ထည့်ပြီးပါပြီ");
+    }
+
+    function deletePurchase(id) {
+      state.purchases = state.purchases.filter(p => p.id !== id);
+      saveState();
+      renderAll();
+      showToast("ကုန်ဝယ်စာရင်း ဖျက်ပြီးပါပြီ");
+    }
+
+    function renderMonthlySummary() {
+      const monthKey = document.getElementById("summaryMonthPicker").value || state.selectedDate.slice(0, 7);
+      const bills = state.monthlyBills[monthKey] || { rent: 0, water: 0, electric: 0 };
+
+      if (document.activeElement.id !== "expRoomRent") document.getElementById("expRoomRent").value = bills.rent;
+      if (document.activeElement.id !== "expWaterBill") document.getElementById("expWaterBill").value = bills.water;
+      if (document.activeElement.id !== "expElectricBill") document.getElementById("expElectricBill").value = bills.electric;
+
+      const dailySalesMonthTotal = state.sales
+        .filter(s => s.date.startsWith(monthKey) && !s.isMonthlySubscriber && !s.excludeFromDailySales)
+        .reduce((sum, s) => sum + Number(s.total || 0), 0);
+
+      const { monthlySubscribersTotal } = computeCreditSummary(monthKey);
+      const totalIncome = dailySalesMonthTotal + monthlySubscribersTotal;
+
+      const monthPurchases = state.purchases.filter(p => p.date.startsWith(monthKey));
+      const goodsExpenseTotal = monthPurchases.reduce((sum, p) => sum + Number(p.amount || 0), 0);
+
+      const fixedBillsTotal = Number(bills.rent || 0) + Number(bills.water || 0) + Number(bills.electric || 0);
+      const totalExpense = goodsExpenseTotal + fixedBillsTotal;
+
+      const netBalance = totalIncome - totalExpense;
+
+      document.getElementById("incDailySales").textContent = formatNum(dailySalesMonthTotal);
+      document.getElementById("incMonthlyCredit").textContent = formatNum(monthlySubscribersTotal);
+      document.getElementById("incTotal").textContent = formatNum(totalIncome);
+
+      document.getElementById("expGoodsTotal").textContent = formatNum(goodsExpenseTotal);
+      document.getElementById("expFixedTotal").textContent = formatNum(fixedBillsTotal);
+      document.getElementById("expGrandTotal").textContent = formatNum(totalExpense);
+
+      document.getElementById("sumTotalIncome").textContent = formatNum(totalIncome);
+      document.getElementById("sumTotalExpense").textContent = formatNum(totalExpense);
+      const netEl = document.getElementById("sumNetBalance");
+      netEl.textContent = formatNum(netBalance);
+      netEl.style.color = netBalance >= 0 ? "#86efac" : "#fca5a5";
+
+      const pBody = document.getElementById("purchasesTableBody");
+      if (!monthPurchases.length) {
+        pBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">ရွေးချယ်ထားသောလအတွက် ကုန်ဝယ်စာရင်း မရှိသေးပါ။</td></tr>`;
+      } else {
+        pBody.innerHTML = monthPurchases.map((p, idx) => `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>${p.date}</td>
+            <td><strong>${p.item}</strong></td>
+            <td style="color:#fca5a5; font-weight:700;">${formatNum(p.amount)}</td>
+            <td><button class="btn btn-sm btn-red" onclick="deletePurchase('${p.id}')">ဖျက်</button></td>
+          </tr>
+        `).join("");
+      }
+    }
+
+    function renderAll() {
+      const dateStr = state.selectedDate;
+      const dayName = getMyanmarDayName(dateStr);
+
+      const dailySalesOnly = state.sales.filter(s => s.date === dateStr && !s.isMonthlySubscriber && !s.excludeFromDailySales);
+      const allDateOrders = state.sales.filter(s => s.date === dateStr);
+      const doneDeliveries = allDateOrders.filter(s => !!state.deliveryChecks[`${dateStr}_${s.id}`]).length;
+
+      document.getElementById("headerSummary").textContent = `အော်ဒါ: ${allDateOrders.length} · ပို့ရန်ကျန်: ${allDateOrders.length - doneDeliveries}`;
+      document.getElementById("deliveryBadge").textContent = allDateOrders.length;
+      document.getElementById("monthlyBadge").textContent = state.subscribers.length;
+
+      let cashTotal = 0;
+      let creditTotal = 0;
+      dailySalesOnly.forEach(s => {
+        if (s.payment === "အကြွေး") creditTotal += Number(s.total || 0);
+        else cashTotal += Number(s.total || 0);
+      });
+
+      document.getElementById("statCash").textContent = formatNum(cashTotal);
+      document.getElementById("statCredit").textContent = formatNum(creditTotal);
+      document.getElementById("statTotal").textContent = formatNum(cashTotal + creditTotal);
+
+      const shiftFilter = document.getElementById("salesShiftFilter").value;
+      const searchQ = (document.getElementById("salesSearch").value || "").trim().toLowerCase();
+
+      const filteredSales = dailySalesOnly.filter(s => {
+        if (shiftFilter !== "ALL" && (s.shift || "မနက်ပိုင်း") !== shiftFilter) return false;
+        if (searchQ && !s.name.toLowerCase().includes(searchQ) && !s.room.toLowerCase().includes(searchQ)) return false;
+        return true;
+      });
+
+      const salesBody = document.getElementById("salesTableBody");
+      if (!filteredSales.length) {
+        salesBody.innerHTML = `<tr><td colspan="10" style="text-align:center; color:var(--text-muted);">နေ့စဉ်ရောင်းရစာရင်း မရှိသေးပါ။</td></tr>`;
+      } else {
+        salesBody.innerHTML = filteredSales.map((s, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td><strong>${s.name}</strong></td>
+            <td style="color:var(--gold); font-weight:700;">${s.room}</td>
+            <td><span class="pill ${s.shift === "ညနေပိုင်း" ? "pill-evening" : "pill-morning"}">${s.shift || "မနက်ပိုင်း"}</span></td>
+            <td>${s.type}${s.remark ? ` <span style="color:#fde68a;">(${s.remark})</span>` : ""}</td>
+            <td>${formatNum(s.price)}</td>
+            <td>${s.qty}</td>
+            <td style="font-weight:700; color:var(--gold-bright);">${formatNum(s.total)}</td>
+            <td><span class="pill ${s.payment === "အကြွေး" ? "pill-monthly-auto" : "pill-morning"}">${s.payment}</span></td>
+            <td>
+              <button class="btn btn-sm" onclick="editSaleEntry('${s.id}')">ပြင်</button>
+              <button class="btn btn-sm btn-red" onclick="deleteSaleEntry('${s.id}')">ဖျက်</button>
+            </td>
+          </tr>
+        `).join("");
+      }
+
+      document.getElementById("monthlyListHeading").textContent = `လစဉ်မှာသူများစာရင်း (${dateStr} · ${dayName})`;
+      const subQ = (document.getElementById("monthlySearch").value || "").trim().toLowerCase();
+      const filteredSubs = state.subscribers.filter(sub =>
+        !subQ || sub.name.toLowerCase().includes(subQ) || sub.room.toLowerCase().includes(subQ)
+      );
+
+      const subBody = document.getElementById("monthlyTableBody");
+      if (!filteredSubs.length) {
+        subBody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--text-muted);">လစဉ်မှာသူ မရှိသေးပါ။</td></tr>`;
+      } else {
+        const schedLabel = {
+          "DAILY": "နေ့စဉ် (ပိတ်ရက်မရှိ)",
+          "SAT_BOTH": "စနေနေ့ မနက် + ည ပို့မည်",
+          "SUN_OFF": "တနင်္ဂနွေပိတ်",
+          "SAT_SUN_OFF": "စနေ၊ တနင်္ဂနွေပိတ်"
+        };
+        subBody.innerHTML = filteredSubs.map((sub, idx) => {
+          const isSkippedToday = !!state.monthlySkips[`${dateStr}_${sub.id}`];
+          const shiftClass = sub.shift === "မနက် + ညနေ" ? "pill-both" : (sub.shift === "ညနေပိုင်း" ? "pill-evening" : "pill-morning");
+          return `
+            <tr>
+              <td>${idx + 1}</td>
+              <td><strong>${sub.name}</strong><br/><span style="color:var(--gold); font-weight:700;">${sub.room}</span></td>
+              <td><span class="pill ${shiftClass}">${sub.shift}</span></td>
+              <td>${sub.type}<br/><span style="color:#fde68a; font-size:12.5px;">${sub.remark || ""}</span></td>
+              <td>${formatNum(sub.price)} × ${sub.qty}</td>
+              <td>${schedLabel[sub.schedule] || sub.schedule}</td>
+              <td>
+                <button class="btn btn-sm ${isSkippedToday ? "btn-gold" : ""}" onclick="toggleSubscriberSkipToday('${sub.id}')">
+                  ${isSkippedToday ? "ယနေ့စာရင်းသို့ ပြန်ထည့်ရန်" : "ယနေ့ ပိတ်ရက်/မယူပါ"}
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-sm ${sub.active ? "btn-green" : "btn-red"}" onclick="toggleSubscriberActive('${sub.id}')">
+                  ${sub.active ? "ဖွင့်ထား" : "ပိတ်ထား"}
+                </button>
+              </td>
+              <td>
+                <button class="btn btn-sm" onclick="editMonthlySubscriber('${sub.id}')">ပြင်</button>
+                <button class="btn btn-sm btn-red" onclick="deleteMonthlySubscriber('${sub.id}')">ဖျက်</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      renderDelivery();
+      renderCredit();
+      renderMonthlySummary();
+    }
+
+    // GOOGLE SHEET & MENU & BACKUP
+    function openSheetModal() {
+      document.getElementById("sheetUrlInput").value = state.sheetUrl || DEFAULT_SHEET_URL;
+      document.getElementById("sheetModal").classList.add("open");
+    }
+
+    function saveSheetUrl() {
+      state.sheetUrl = document.getElementById("sheetUrlInput").value.trim() || DEFAULT_SHEET_URL;
+      saveState();
+      closeModal("sheetModal");
+      syncAllWithSheet();
+    }
+
+    async function syncAllWithSheet(silent = false) {
+      const url = state.sheetUrl || DEFAULT_SHEET_URL;
+      if (!url) return;
+      try {
+        await fetch(url, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "syncState",
+            updatedAt: new Date().toISOString(),
+            payload: state
+          })
+        });
+        document.getElementById("sheetStatusBadge").textContent = "Sync ပြီး";
+        if (!silent) showToast("Google Sheet သို့ Sync ပြီးပါပြီ");
+      } catch (err) {
+        if (!silent) showToast("Sync လုပ်ဆောင်ရာတွင် အခက်အခဲရှိပါသည်");
+      }
+    }
+
+    function openMenuModal() {
+      renderMenuDishes();
+      document.getElementById("menuModal").classList.add("open");
+    }
+
+    function addMenuDish() {
+      const shift = document.getElementById("menuShift").value;
+      const name = document.getElementById("menuDishName").value.trim();
+      const price = Number(document.getElementById("menuDishPrice").value || 0);
+      if (!name) return;
+      state.menuDishes.push({ id: "m-" + Date.now(), shift, name, price });
+      saveState();
+      document.getElementById("menuDishName").value = "";
+      renderMenuDishes();
+    }
+
+    function applyMenuDish(id) {
+      const dish = state.menuDishes.find(d => d.id === id);
+      if (!dish) return;
+      document.getElementById("saleShift").value = dish.shift;
+      document.getElementById("saleRemark").value = dish.name;
+      document.getElementById("salePrice").value = dish.price;
+      updateSaleTotal();
+      closeModal("menuModal");
+      switchTab("sales");
+      showToast(`${dish.shift} - ${dish.name} ဖြည့်ပြီးပါပြီ`);
+    }
+
+    function renderMenuDishes() {
+      const listEl = document.getElementById("menuDishList");
+      listEl.innerHTML = state.menuDishes.map(d => `
+        <div class="stat-card" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+          <div>
+            <span class="pill ${d.shift === "ညနေပိုင်း" ? "pill-evening" : "pill-morning"}">${d.shift}</span>
+            <div style="font-weight:700; margin-top:4px;">${d.name}</div>
+            <div style="font-size:12.5px; color:var(--gold);">${formatNum(d.price)}</div>
+          </div>
+          <button class="btn btn-sm btn-gold" onclick="applyMenuDish('${d.id}')">ရွေးမည်</button>
+        </div>
+      `).join("");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+    }
+
+    function exportBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `yadanar_fastfood_backup_${state.selectedDate}.json`;
+      a.click();
+    }
+
+    function importBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          state = { ...state, ...imported };
+          saveState();
+          renderAll();
+          showToast("Backup ပြန်လည်ထည့်သွင်းပြီးပါပြီ");
+        } catch (err) {
+          showToast("ဖိုင်ဖတ်မရပါ");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>
