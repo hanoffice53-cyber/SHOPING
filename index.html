@@ -64,16 +64,17 @@
     }
 
     .brand-logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--gold-bright), var(--gold-dim));
-      color: #1b1006;
-      font-weight: 700;
-      font-size: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2d1b0d, #160d06);
+      border: 1.5px solid var(--gold);
+      color: var(--gold-bright);
+      font-size: 26px;
       display: grid;
       place-items: center;
       flex-shrink: 0;
+      box-shadow: 0 0 14px rgba(245, 183, 39, 0.25);
     }
 
     .brand h1 {
@@ -314,6 +315,46 @@
       width: 100%;
     }
 
+    .avatar-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+    }
+
+    .avatar-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--gold);
+      background: var(--bg-card);
+      flex-shrink: 0;
+    }
+
+    .avatar-placeholder {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(245, 183, 39, 0.14);
+      border: 1px dashed var(--gold-dim);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .name-with-photo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .pay-toggle {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -452,6 +493,9 @@
       font-weight: 700;
       font-size: 15px;
       margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .room-type {
@@ -541,10 +585,10 @@
   <div class="container">
     <div class="topbar">
       <div class="brand">
-        <div class="brand-logo">၄၉</div>
+        <div class="brand-logo" title="YADANAR">◆</div>
         <div>
           <h1>YADANAR Fastfood</h1>
-          <p>ဈေးရောင်းမှတ်စု နှင့် ပို့ဆောင်ရေးစနစ် (Google Sheet Sync · လချုပ်စာရင်း)</p>
+          <p>ဈေးရောင်းမှတ်စု နှင့် ပို့ဆောင်ရေးစနစ် (App → Google Sheet One-Way Sync)</p>
         </div>
       </div>
       <div class="top-actions">
@@ -615,6 +659,17 @@
             <input type="text" id="saleRoom" placeholder="ဥပမာ - A 1/1" />
           </div>
           <div class="field">
+            <label>အမည်ပုံ (ရွေးချယ်ရန်)</label>
+            <div class="avatar-box">
+              <div id="salePhotoPreview"></div>
+              <label class="btn btn-sm" style="margin:0;">
+                ပုံရွေးရန်
+                <input type="file" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event, 'sale')" />
+              </label>
+              <button type="button" class="btn btn-sm btn-red" onclick="clearFormPhoto('sale')">ဖျက်</button>
+            </div>
+          </div>
+          <div class="field">
             <label>အချိန်ပိုင်း *</label>
             <select id="saleShift">
               <option value="မနက်ပိုင်း">မနက်ပိုင်း</option>
@@ -651,7 +706,7 @@
               <button type="button" class="pay-option" id="payCreditBtn" onclick="setPaymentMode('အကြွေး')">အကြွေး</button>
             </div>
           </div>
-          <div class="field" style="grid-column: span 2; display:flex; align-items:flex-end;">
+          <div class="field" style="display:flex; align-items:flex-end;">
             <button class="btn btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="saveSaleEntry()">
               ✓ စာရင်းသိမ်းဆည်းမည်
             </button>
@@ -785,6 +840,17 @@
             <input type="text" id="subRoom" placeholder="ဥပမာ - B 2/6" />
           </div>
           <div class="field">
+            <label>အမည်ပုံ (ရွေးချယ်ရန်)</label>
+            <div class="avatar-box">
+              <div id="subPhotoPreview"></div>
+              <label class="btn btn-sm" style="margin:0;">
+                ပုံရွေးရန်
+                <input type="file" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event, 'sub')" />
+              </label>
+              <button type="button" class="btn btn-sm btn-red" onclick="clearFormPhoto('sub')">ဖျက်</button>
+            </div>
+          </div>
+          <div class="field">
             <label>အချိန်ပိုင်း *</label>
             <select id="subShift">
               <option value="မနက်ပိုင်း">မနက်ပိုင်း (၅:၀၀ AM ပို့မည်)</option>
@@ -811,7 +877,7 @@
             <label>အရေအတွက် *</label>
             <input type="number" id="subQty" min="1" value="1" />
           </div>
-          <div class="field">
+          <div class="field" style="grid-column: span 2;">
             <label>ပို့ဆောင်မည့်ရက် *</label>
             <select id="subSchedule">
               <option value="DAILY">နေ့စဉ် (ပိတ်ရက်မရှိ)</option>
@@ -820,7 +886,7 @@
               <option value="SAT_SUN_OFF">စနေ၊ တနင်္ဂနွေပိတ်</option>
             </select>
           </div>
-          <div class="field" style="grid-column: span 4; display:flex; align-items:flex-end;">
+          <div class="field" style="grid-column: span 2; display:flex; align-items:flex-end;">
             <button class="btn btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="saveMonthlySubscriber()">
               ✓ လစဉ်မှာသူ သိမ်းဆည်းမည်
             </button>
@@ -972,7 +1038,7 @@
   <div class="modal-backdrop" id="sheetModal">
     <div class="modal">
       <div class="panel-header">
-        <h3 class="panel-title">Google Sheet ချိတ်ဆက်မှု</h3>
+        <h3 class="panel-title">Google Sheet ချိတ်ဆက်မှု (App မှ Sheet သို့သာ ပို့မည်)</h3>
         <button class="btn btn-sm" onclick="closeModal('sheetModal')">✕</button>
       </div>
       <div class="field" style="margin-bottom:12px;">
@@ -980,7 +1046,7 @@
         <input type="text" id="sheetUrlInput" />
       </div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
-        <button class="btn btn-gold" onclick="saveSheetUrl()">သိမ်းဆည်းပြီး Sync လုပ်မည်</button>
+        <button class="btn btn-gold" onclick="saveSheetUrl()">သိမ်းဆည်းပြီး ပို့မည်</button>
       </div>
     </div>
   </div>
@@ -1037,25 +1103,25 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbxTCHXjy0JDTEJFIxU1FUEHzA4ScjJ7ef2l3j-LuMqNCrJH8SOp83CwYvWs55OZqqX4/exec";
-    const STORAGE_KEY = "YADANAR_FASTFOOD_DB_V6";
+    const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbyFMlBvfJhPOQE7qbQpsr3MWTa3jQN6afQmKiW4zx5iWomJ9Zq2PovJkuPKxvqHRh9P/exec";
+    const STORAGE_KEY = "YADANAR_FASTFOOD_DB_V7";
 
     const DEFAULT_SUBSCRIBERS = [
-      { id: "sub-1", name: "သင်းစာလင်း", room: "B 2/6", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 450, qty: 1, schedule: "DAILY", active: true },
-      { id: "sub-2", name: "ကောင်းသက်ထွန်း", room: "A 3/4", shift: "မနက် + ညနေ", type: "ထမင်းနှင့်ဟင်း", remark: "ထမင်းနဲ့ဟင်း", price: 1520, qty: 1, schedule: "DAILY", active: false },
-      { id: "sub-3", name: "နန်းမူ", room: "B 3/8", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 780, qty: 1, schedule: "DAILY", active: true },
-      { id: "sub-4", name: "ဖြိုးဝေစိုး", room: "B 3/4", shift: "ညနေပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
-      { id: "sub-5", name: "ဇာဇာ", room: "A 1/10", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
-      { id: "sub-6", name: "နိုင်လင်းဆွေ", room: "A 1/2", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
-      { id: "sub-7", name: "လချွန်း", room: "B 1/14", shift: "မနက် + ညနေ", type: "ထမင်းနှင့်ဟင်း", remark: "ထမင်းနဲ့ဟင်း", price: 1750, qty: 1, schedule: "DAILY", active: true },
-      { id: "sub-8", name: "အောင်ခန့်", room: "B 1/3", shift: "မနက် + ညနေ", type: "ဟင်း", remark: "ဟင်း", price: 1800, qty: 1, schedule: "DAILY", active: true }
+      { id: "sub-1", name: "သင်းစာလင်း", room: "B 2/6", photo: "", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 450, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-2", name: "ကောင်းသက်ထွန်း", room: "A 3/4", photo: "", shift: "မနက် + ညနေ", type: "ထမင်းနှင့်ဟင်း", remark: "ထမင်းနဲ့ဟင်း", price: 1520, qty: 1, schedule: "DAILY", active: false },
+      { id: "sub-3", name: "နန်းမူ", room: "B 3/8", photo: "", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 780, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-4", name: "ဖြိုးဝေစိုး", room: "B 3/4", photo: "", shift: "ညနေပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-5", name: "ဇာဇာ", room: "A 1/10", photo: "", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-6", name: "နိုင်လင်းဆွေ", room: "A 1/2", photo: "", shift: "မနက်ပိုင်း", type: "ဟင်း", remark: "ဟင်း", price: 900, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-7", name: "လချွန်း", room: "B 1/14", photo: "", shift: "မနက် + ညနေ", type: "ထမင်းနှင့်ဟင်း", remark: "ထမင်းနဲ့ဟင်း", price: 1750, qty: 1, schedule: "DAILY", active: true },
+      { id: "sub-8", name: "အောင်ခန့်", room: "B 1/3", photo: "", shift: "မနက် + ညနေ", type: "ဟင်း", remark: "ဟင်း", price: 1800, qty: 1, schedule: "DAILY", active: true }
     ];
 
     const DEFAULT_MENU = [
-      { id: "m-1", shift: "မနက်ပိုင်း", name: "ထမင်းနဲ့ဟင်း", price: 40 },
-      { id: "m-2", shift: "မနက်ပိုင်း", name: "မနက်ပိုင်းဟင်း", price: 30 },
-      { id: "m-3", shift: "ညနေပိုင်း", name: "ထမင်းနဲ့ဟင်း", price: 40 },
-      { id: "m-4", shift: "ညနေပိုင်း", name: "ညနေပိုင်းဟင်း", price: 30 }
+      { id: "m-1", shift: "မနက်ပိုင်း", name: "ထမင်းနဲ့ဟင်း", price: 60 },
+      { id: "m-2", shift: "မနက်ပိုင်း", name: "မနက်ပိုင်းဟင်း", price: 50 },
+      { id: "m-3", shift: "ညနေပိုင်း", name: "ထမင်းနဲ့ဟင်း", price: 60 },
+      { id: "m-4", shift: "ညနေပိုင်း", name: "ညနေပိုင်းဟင်း", price: 50 }
     ];
 
     let state = loadState();
@@ -1063,6 +1129,8 @@
     let paymentMode = "ငွေသား";
     let editingSaleId = null;
     let editingSubId = null;
+    let formSalePhoto = "";
+    let formSubPhoto = "";
     let deliveryShiftFilter = "ALL";
     let deliveryTypeFilter = "ALL";
     let creditTargetKey = null;
@@ -1084,6 +1152,7 @@
             selectedDate: parsed.selectedDate || getLocalDateStr(),
             sales: parsed.sales || [],
             subscribers: parsed.subscribers || DEFAULT_SUBSCRIBERS,
+            personPhotos: parsed.personPhotos || {},
             monthlySkips: parsed.monthlySkips || {},
             deliveryChecks: parsed.deliveryChecks || {},
             creditPayments: parsed.creditPayments || [],
@@ -1098,6 +1167,7 @@
         selectedDate: getLocalDateStr(),
         sales: [],
         subscribers: DEFAULT_SUBSCRIBERS,
+        personPhotos: {},
         monthlySkips: {},
         deliveryChecks: {},
         creditPayments: [],
@@ -1121,6 +1191,79 @@
 
     function formatNum(n) {
       return Number(n || 0).toLocaleString("en-US");
+    }
+
+    function getPersonKey(name, room) {
+      return `${String(name || "").trim()}__${String(room || "").trim()}`;
+    }
+
+    function getPersonPhoto(name, room, fallbackPhoto = "") {
+      const key = getPersonKey(name, room);
+      return state.personPhotos[key] || fallbackPhoto || "";
+    }
+
+    function setPersonPhoto(name, room, dataUrl) {
+      const key = getPersonKey(name, room);
+      if (!key || key === "__") return;
+      if (dataUrl) state.personPhotos[key] = dataUrl;
+      else delete state.personPhotos[key];
+    }
+
+    function renderAvatarHtml(name, room, photo = "") {
+      const src = photo || getPersonPhoto(name, room);
+      if (src) {
+        return `<img class="avatar-img" src="${src}" alt="${name}" />`;
+      }
+      const initial = (String(name || "◆").trim()[0] || "◆");
+      return `<span class="avatar-placeholder">${initial}</span>`;
+    }
+
+    function updatePhotoPreview(target) {
+      const src = target === "sale" ? formSalePhoto : formSubPhoto;
+      const el = document.getElementById(target === "sale" ? "salePhotoPreview" : "subPhotoPreview");
+      if (src) {
+        el.innerHTML = `<img class="avatar-img" src="${src}" alt="preview" />`;
+      } else {
+        el.innerHTML = `<span class="avatar-placeholder">◆</span>`;
+      }
+    }
+
+    function handlePhotoUpload(event, target) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxSize = 160;
+          let w = img.width;
+          let h = img.height;
+          if (w > h && w > maxSize) {
+            h = Math.round((h * maxSize) / w);
+            w = maxSize;
+          } else if (h >= w && h > maxSize) {
+            w = Math.round((w * maxSize) / h);
+            h = maxSize;
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+          const compressed = canvas.toDataURL("image/jpeg", 0.78);
+          if (target === "sale") formSalePhoto = compressed;
+          else formSubPhoto = compressed;
+          updatePhotoPreview(target);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearFormPhoto(target) {
+      if (target === "sale") formSalePhoto = "";
+      else formSubPhoto = "";
+      updatePhotoPreview(target);
     }
 
     function getMyanmarDayName(dateStr) {
@@ -1181,6 +1324,7 @@
               date: targetDate,
               name: sub.name,
               room: sub.room,
+              photo: getPersonPhoto(sub.name, sub.room, sub.photo || ""),
               shift: sh,
               type: sub.type,
               remark: sub.remark || (sub.type === "ထမင်းနှင့်ဟင်း" ? "ထမင်းနဲ့ဟင်း" : "ဟင်း"),
@@ -1212,6 +1356,8 @@
       document.getElementById("creditMonthPicker").value = state.selectedDate.slice(0, 7);
       document.getElementById("summaryMonthPicker").value = state.selectedDate.slice(0, 7);
       document.getElementById("sheetUrlInput").value = state.sheetUrl || DEFAULT_SHEET_URL;
+      updatePhotoPreview("sale");
+      updatePhotoPreview("sub");
       onSaleTypeChange();
       onSubTypeChange();
       updateSaleTotal();
@@ -1285,13 +1431,15 @@
 
     function resetSaleForm() {
       editingSaleId = null;
+      formSalePhoto = "";
+      updatePhotoPreview("sale");
       document.getElementById("saleFormTitle").textContent = "စာရင်းအသစ်ထည့်သွင်းရန်";
       document.getElementById("saleName").value = "";
       document.getElementById("saleRoom").value = "";
       document.getElementById("saleShift").value = "မနက်ပိုင်း";
       document.getElementById("saleType").value = "ထမင်းနှင့်ဟင်း";
       document.getElementById("saleRemark").value = "ထမင်းနဲ့ဟင်း";
-      document.getElementById("salePrice").value = "40";
+      document.getElementById("salePrice").value = "60";
       document.getElementById("saleQty").value = "1";
       updateSaleTotal();
       setPaymentMode("ငွေသား");
@@ -1313,12 +1461,17 @@
         return;
       }
 
+      if (formSalePhoto) {
+        setPersonPhoto(name, room, formSalePhoto);
+      }
+      const photo = getPersonPhoto(name, room, formSalePhoto);
+
       if (editingSaleId) {
         const idx = state.sales.findIndex(s => s.id === editingSaleId);
         if (idx > -1) {
           state.sales[idx] = {
             ...state.sales[idx],
-            name, room, shift, type, remark, price, qty, total, payment: paymentMode
+            name, room, photo, shift, type, remark, price, qty, total, payment: paymentMode
           };
         }
         showToast("စာရင်းပြင်ဆင်ပြီးပါပြီ");
@@ -1326,7 +1479,7 @@
         state.sales.push({
           id: "s-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6),
           date: state.selectedDate,
-          name, room, shift, type, remark, price, qty, total,
+          name, room, photo, shift, type, remark, price, qty, total,
           payment: paymentMode,
           isMonthlySubscriber: false,
           excludeFromDailySales: false
@@ -1344,6 +1497,8 @@
       const item = state.sales.find(s => s.id === id);
       if (!item) return;
       editingSaleId = id;
+      formSalePhoto = getPersonPhoto(item.name, item.room, item.photo || "");
+      updatePhotoPreview("sale");
       document.getElementById("saleFormTitle").textContent = "စာရင်းပြင်ဆင်ရန်";
       document.getElementById("saleName").value = item.name;
       document.getElementById("saleRoom").value = item.room;
@@ -1366,6 +1521,8 @@
 
     function resetMonthlyForm() {
       editingSubId = null;
+      formSubPhoto = "";
+      updatePhotoPreview("sub");
       document.getElementById("monthlyFormTitle").textContent = "လစဉ်မှာသူ စာရင်းထည့်ရန် (တစ်လစာ လစဉ်ကြေး တစ်ခုတည်းသာ တွက်ချက်ပါမည်)";
       document.getElementById("subName").value = "";
       document.getElementById("subRoom").value = "";
@@ -1393,12 +1550,17 @@
         return;
       }
 
+      if (formSubPhoto) {
+        setPersonPhoto(name, room, formSubPhoto);
+      }
+      const photo = getPersonPhoto(name, room, formSubPhoto);
+
       if (editingSubId) {
         const idx = state.subscribers.findIndex(s => s.id === editingSubId);
         if (idx > -1) {
           state.subscribers[idx] = {
             ...state.subscribers[idx],
-            name, room, shift, type, remark, price, qty, schedule
+            name, room, photo, shift, type, remark, price, qty, schedule
           };
           state.sales = state.sales.filter(s => !(s.date === state.selectedDate && s.id.startsWith(`md-${state.selectedDate}-${editingSubId}-`)));
         }
@@ -1406,7 +1568,7 @@
       } else {
         state.subscribers.push({
           id: "sub-" + Date.now(),
-          name, room, shift, type, remark, price, qty, schedule,
+          name, room, photo, shift, type, remark, price, qty, schedule,
           active: true
         });
         showToast("လစဉ်မှာသူ ထည့်သွင်းပြီးပါပြီ");
@@ -1423,6 +1585,8 @@
       const sub = state.subscribers.find(s => s.id === id);
       if (!sub) return;
       editingSubId = id;
+      formSubPhoto = getPersonPhoto(sub.name, sub.room, sub.photo || "");
+      updatePhotoPreview("sub");
       document.getElementById("monthlyFormTitle").textContent = "လစဉ်မှာသူ ပြင်ဆင်ရန်";
       document.getElementById("subName").value = sub.name;
       document.getElementById("subRoom").value = sub.room;
@@ -1545,7 +1709,10 @@
               <span class="room-no">${item.room}</span>
               <span style="display:flex; gap:4px; align-items:center;">${subTag}${shiftBadge}</span>
             </div>
-            <div class="room-name">${item.name} (${item.qty})</div>
+            <div class="room-name">
+              ${renderAvatarHtml(item.name, item.room, item.photo || "")}
+              <span>${item.name} (${item.qty})</span>
+            </div>
             <div class="room-type">${item.type}</div>
             ${item.remark ? `<div class="room-remark">${item.remark}</div>` : ""}
             <div style="margin-top:8px; font-size:12px; font-weight:700; color:${isDone ? "#86efac" : "var(--gold)"};">
@@ -1588,28 +1755,30 @@
 
     function computeCreditSummary(selectedMonth) {
       const map = new Map();
-      const ensureEntry = (name, room, isMonthly = false) => {
-        const key = `${name.trim()}__${room.trim()}`;
+      const ensureEntry = (name, room, isMonthly = false, photo = "") => {
+        const key = getPersonKey(name, room);
         if (!map.has(key)) {
           map.set(key, {
             key,
             name: name.trim(),
             room: room.trim(),
+            photo: getPersonPhoto(name, room, photo),
             isMonthly,
             dayCredit: 0,
             monthCredit: 0,
             allCredit: 0,
             paid: 0
           });
-        } else if (isMonthly) {
-          map.get(key).isMonthly = true;
+        } else {
+          if (isMonthly) map.get(key).isMonthly = true;
+          if (!map.get(key).photo) map.get(key).photo = getPersonPhoto(name, room, photo);
         }
         return map.get(key);
       };
 
       let monthlySubscribersTotal = 0;
       state.subscribers.forEach(sub => {
-        const entry = ensureEntry(sub.name, sub.room, true);
+        const entry = ensureEntry(sub.name, sub.room, true, sub.photo || "");
         const monthlyFee = sub.active ? Number(sub.price || 0) * Number(sub.qty || 1) : 0;
         entry.dayCredit = 0;
         entry.monthCredit += monthlyFee;
@@ -1619,7 +1788,7 @@
 
       state.sales.forEach(s => {
         if (!s.isMonthlySubscriber && s.payment === "အကြွေး") {
-          const entry = ensureEntry(s.name, s.room, false);
+          const entry = ensureEntry(s.name, s.room, false, s.photo || "");
           const amt = Number(s.total || 0);
           entry.allCredit += amt;
           if (s.date === state.selectedDate) entry.dayCredit += amt;
@@ -1668,7 +1837,12 @@
       tbody.innerHTML = filtered.map((r, idx) => `
         <tr>
           <td>${idx + 1}</td>
-          <td><strong>${r.name}</strong></td>
+          <td>
+            <span class="name-with-photo">
+              ${renderAvatarHtml(r.name, r.room, r.photo)}
+              <strong>${r.name}</strong>
+            </span>
+          </td>
           <td style="color:var(--gold); font-weight:700;">${r.room}</td>
           <td>${r.isMonthly ? `<span class="pill pill-monthly-auto">လစဉ်မှာသူ</span>` : `<span class="pill pill-morning">နေ့စဉ်</span>`}</td>
           <td>${formatNum(r.dayCredit)}</td>
@@ -1816,7 +1990,12 @@
         salesBody.innerHTML = filteredSales.map((s, i) => `
           <tr>
             <td>${i + 1}</td>
-            <td><strong>${s.name}</strong></td>
+            <td>
+              <span class="name-with-photo">
+                ${renderAvatarHtml(s.name, s.room, s.photo || "")}
+                <strong>${s.name}</strong>
+              </span>
+            </td>
             <td style="color:var(--gold); font-weight:700;">${s.room}</td>
             <td><span class="pill ${s.shift === "ညနေပိုင်း" ? "pill-evening" : "pill-morning"}">${s.shift || "မနက်ပိုင်း"}</span></td>
             <td>${s.type}${s.remark ? ` <span style="color:#fde68a;">(${s.remark})</span>` : ""}</td>
@@ -1854,7 +2033,15 @@
           return `
             <tr>
               <td>${idx + 1}</td>
-              <td><strong>${sub.name}</strong><br/><span style="color:var(--gold); font-weight:700;">${sub.room}</span></td>
+              <td>
+                <span class="name-with-photo">
+                  ${renderAvatarHtml(sub.name, sub.room, sub.photo || "")}
+                  <span>
+                    <strong>${sub.name}</strong><br/>
+                    <span style="color:var(--gold); font-weight:700;">${sub.room}</span>
+                  </span>
+                </span>
+              </td>
               <td><span class="pill ${shiftClass}">${sub.shift}</span></td>
               <td>${sub.type}<br/><span style="color:#fde68a; font-size:12.5px;">${sub.remark || ""}</span></td>
               <td>${formatNum(sub.price)} × ${sub.qty}</td>
@@ -1883,7 +2070,7 @@
       renderMonthlySummary();
     }
 
-    // GOOGLE SHEET & MENU & BACKUP
+    // ONE-WAY PUSH TO GOOGLE SHEET (App -> Sheet only)
     function openSheetModal() {
       document.getElementById("sheetUrlInput").value = state.sheetUrl || DEFAULT_SHEET_URL;
       document.getElementById("sheetModal").classList.add("open");
@@ -1900,20 +2087,33 @@
       const url = state.sheetUrl || DEFAULT_SHEET_URL;
       if (!url) return;
       try {
+        // Strip heavy base64 images when sending to Sheet so payload stays fast & clean
+        const lightPayload = {
+          selectedDate: state.selectedDate,
+          sales: state.sales.map(({ photo, ...rest }) => rest),
+          subscribers: state.subscribers.map(({ photo, ...rest }) => rest),
+          monthlySkips: state.monthlySkips,
+          deliveryChecks: state.deliveryChecks,
+          creditPayments: state.creditPayments,
+          menuDishes: state.menuDishes,
+          purchases: state.purchases,
+          monthlyBills: state.monthlyBills
+        };
+
         await fetch(url, {
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            action: "syncState",
+            action: "pushOnly",
             updatedAt: new Date().toISOString(),
-            payload: state
+            payload: lightPayload
           })
         });
-        document.getElementById("sheetStatusBadge").textContent = "Sync ပြီး";
-        if (!silent) showToast("Google Sheet သို့ Sync ပြီးပါပြီ");
+        document.getElementById("sheetStatusBadge").textContent = "ပို့ပြီး";
+        if (!silent) showToast("App မှ ဒေတာများ Google Sheet သို့ ပို့ပြီးပါပြီ");
       } catch (err) {
-        if (!silent) showToast("Sync လုပ်ဆောင်ရာတွင် အခက်အခဲရှိပါသည်");
+        if (!silent) showToast("Google Sheet သို့ ပို့ရာတွင် အခက်အခဲရှိပါသည်");
       }
     }
 
